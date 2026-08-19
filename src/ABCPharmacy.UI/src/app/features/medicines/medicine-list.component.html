@@ -1,0 +1,33 @@
+<div>
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:12px;">
+    <input type="text" [(ngModel)]="search" placeholder="Search by name" (keyup.enter)="load()" />
+    <button (click)="load()">Search</button>
+    <button (click)="load()">Refresh</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Brand</th>
+        <th>Expiry</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Sell</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of medicines()" [class.expired-soon]="isExpiryLessThan30(m)" [class.low-stock]="m.quantity < 10">
+        <td>{{m.fullName}}</td>
+        <td>{{m.brand}}</td>
+        <td>{{m.expiryDate | date:'mediumDate'}}</td>
+        <td>{{m.quantity}}</td>
+        <td>{{m.price | currency}}</td>
+        <td style="display:flex;gap:8px;align-items:center;">
+          <input type="number" min="1" [(ngModel)]="quantityToSell[m.id]" style="width:70px;" />
+          <button (click)="sell(m)">Sell</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
