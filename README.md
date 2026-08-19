@@ -15,13 +15,9 @@ This section documents the recent changes made to the repository and how to run 
 - Replaced UI with an Angular 21 single-page app: `src/ABCPharmacy.UI`
   - Key files: `package.json`, `proxy.conf.json`, `src/main.ts`, `src/app/*` (components, services, models), `angular.json`, `tsconfig.json`.
 - JSON persistence: medicine and sale records are stored in `src/ABCPharmacy.Api/Data/medicines.json` and `sales.json`.
-- Implemented: Dependency Injection (DI), repository/service pattern, Swagger documentation, Cross-Origin Resource Sharing (CORS), global exception handling, sale recording, and stock reduction.
 
 ### Local run (development)
-1. Ensure .NET 8 SDK and Node.js are installed. Install Angular CLI if needed (`npm i -g @angular/cli@21` or use `npx`).
 
-2. From the repository root (`C:\AdarshWork\ABCPharmacy`):
-   - Restore and run the API:
      ```powershell
      cd src\ABCPharmacy.Api
      dotnet restore
@@ -29,7 +25,6 @@ This section documents the recent changes made to the repository and how to run 
      ```
      Default API URLs (configured): `http://localhost:5001` and `https://localhost:7201` (see `Properties/launchSettings.json`).
 
-   - Run the Angular UI (in a separate terminal):
      ```powershell
      cd src\ABCPharmacy.UI
      npm install
@@ -37,21 +32,15 @@ This section documents the recent changes made to the repository and how to run 
      ```
      Angular dev server: `http://localhost:5002` (proxy configured to forward `/api` to the API HTTPS address).
 
-3. Access the API Swagger documentation (development): `https://localhost:7201/swagger`.
 
 ### Ports and proxy
-- The Angular dev server uses `proxy.conf.json` to proxy `/api` to `https://localhost:7201`, allowing you to call the API without CORS issues. If you change API ports, update `src\ABCPharmacy.UI\proxy.conf.json` and the `applicationUrl` in `src\ABCPharmacy.Api\Properties\launchSettings.json`.
 
 ### Troubleshooting
-- **Address already in use**:
-  - Find the process using the port (PowerShell):
     ```powershell
     netstat -ano | findstr ":5001"
     taskkill /PID <PID> /F
     ```
-  - Alternatively, change the port in `launchSettings.json` and update `proxy.conf.json`.
 
-- **CodeDom provider error (missing `Microsoft.VisualC.CppCodeProvider`)**:
   - Search for the entry in project configs or system `machine.config` and remove/comment the `<compiler ... type="Microsoft.VisualC.CppCodeProvider,..."/>` line. Backup `machine.config` before editing.
 
 ### Committing changes
